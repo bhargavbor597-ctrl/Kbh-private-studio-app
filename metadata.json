@@ -1,0 +1,6 @@
+{
+  "name": "KHB Private Limited",
+  "description": "Official company and mobile apps publishing website for KHB Private Limited (KAMBARIYA-HB ENTERPRISE PRIVATE LIMITED).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
