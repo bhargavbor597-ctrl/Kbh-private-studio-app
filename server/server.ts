@@ -28,6 +28,12 @@ export async function createServer() {
     }
   });
 
+  // Google Search Console verification file
+  app.get('/google8ead62883de26aa2.html', (_req: Request, res: Response) => {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    return res.send('google-site-verification: google8ead62883de26aa2.html');
+  });
+
   // REST API router
   app.use('/api', apiRouter);
 
