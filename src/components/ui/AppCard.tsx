@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppItem } from '../../types.ts';
 import { Link } from '../../context/RouterContext.tsx';
-import { Play, Sparkles, ArrowRight, ExternalLink } from 'lucide-react';
+import { Play, Sparkles, ArrowRight, ExternalLink, Shield } from 'lucide-react';
 
 interface AppCardProps {
   app: AppItem;
@@ -81,7 +81,7 @@ export const AppCard: React.FC<AppCardProps> = ({ app, featuredHighlight = false
       </p>
 
       {/* Actions */}
-      <div className="pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-3 mt-auto">
+      <div className="pt-4 border-t border-slate-100 dark:border-slate-800/80 flex flex-wrap items-center justify-between gap-2.5 mt-auto">
         <Link
           to={`/apps/${app.slug}`}
           id={`view-details-${app.slug}`}
@@ -91,20 +91,32 @@ export const AppCard: React.FC<AppCardProps> = ({ app, featuredHighlight = false
           <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
         </Link>
 
-        {app.playStoreUrl && (
-          <a
-            href={app.playStoreUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            id={`play-store-${app.slug}`}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors shadow-xs"
-            title="Download on Google Play"
+        <div className="flex items-center gap-2">
+          <Link
+            to={`/apps/${app.slug}/privacy`}
+            id={`privacy-link-${app.slug}`}
+            className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors"
+            title={`${app.name} Privacy Policy`}
           >
-            <Play className="w-3 h-3 fill-current" />
-            <span>Google Play</span>
-            <ExternalLink className="w-3 h-3 opacity-60" />
-          </a>
-        )}
+            <Shield className="w-3 h-3" />
+            <span>Privacy Policy</span>
+          </Link>
+
+          {app.playStoreUrl && (
+            <a
+              href={app.playStoreUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              id={`play-store-${app.slug}`}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors shadow-xs"
+              title="Download on Google Play"
+            >
+              <Play className="w-3 h-3 fill-current" />
+              <span>Google Play</span>
+              <ExternalLink className="w-3 h-3 opacity-60" />
+            </a>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -54,7 +54,7 @@ export async function createServer() {
 
   // Serve static files in production
   const distPath = path.resolve(process.cwd(), 'dist');
-  app.use(express.static(distPath));
+  app.use(express.static(distPath, { redirect: false }));
 
   // SPA fallback
   app.get('*', (req: Request, res: Response, next) => {

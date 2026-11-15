@@ -69,53 +69,54 @@ const AdminRouteGuard: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
 const AppContent: React.FC = () => {
   const { path } = useRouter();
+  const cleanPath = path.length > 1 ? path.replace(/\/+$/, '') : path;
 
   // 1. Admin Authentication Route
-  if (path === '/admin/login') {
+  if (cleanPath === '/admin/login') {
     return <AdminLoginPage />;
   }
 
   // 2. Admin Routes (Protected)
-  if (path.startsWith('/admin')) {
+  if (cleanPath.startsWith('/admin')) {
     let adminComponent = <AdminDashboardPage />;
 
-    if (path === '/admin/apps') {
+    if (cleanPath === '/admin/apps') {
       adminComponent = <AdminAppsListPage />;
-    } else if (path === '/admin/games') {
+    } else if (cleanPath === '/admin/games') {
       adminComponent = <AdminGamesListPage />;
-    } else if (path === '/admin/apps/new') {
+    } else if (cleanPath === '/admin/apps/new') {
       adminComponent = <AdminAppFormPage />;
-    } else if (path.startsWith('/admin/apps/edit/')) {
+    } else if (cleanPath.startsWith('/admin/apps/edit/')) {
       adminComponent = <AdminAppFormPage />;
-    } else if (path === '/admin/theme') {
+    } else if (cleanPath === '/admin/theme') {
       adminComponent = <AdminThemePage />;
-    } else if (path === '/admin/homepage') {
+    } else if (cleanPath === '/admin/homepage') {
       adminComponent = <AdminContentManagementPage initialTab="home" />;
-    } else if (path === '/admin/pages') {
+    } else if (cleanPath === '/admin/pages') {
       adminComponent = <AdminContentManagementPage initialTab="about" />;
-    } else if (path === '/admin/header-footer') {
+    } else if (cleanPath === '/admin/header-footer') {
       adminComponent = <AdminContentManagementPage initialTab="footer" />;
-    } else if (path === '/admin/contact-info') {
+    } else if (cleanPath === '/admin/contact-info') {
       adminComponent = <AdminContactInfoPage />;
-    } else if (path === '/admin/media') {
+    } else if (cleanPath === '/admin/media') {
       adminComponent = <AdminMediaLibraryPage />;
-    } else if (path === '/admin/navigation') {
+    } else if (cleanPath === '/admin/navigation') {
       adminComponent = <AdminNavigationPage />;
-    } else if (path === '/admin/seo') {
+    } else if (cleanPath === '/admin/seo') {
       adminComponent = <AdminSeoPage />;
-    } else if (path === '/admin/app-ads') {
+    } else if (cleanPath === '/admin/app-ads') {
       adminComponent = <AdminAppAdsPage />;
-    } else if (path === '/admin/backup') {
+    } else if (cleanPath === '/admin/backup') {
       adminComponent = <AdminBackupPage />;
-    } else if (path === '/admin/content') {
+    } else if (cleanPath === '/admin/content') {
       adminComponent = <AdminContentManagementPage />;
-    } else if (path === '/admin/messages') {
+    } else if (cleanPath === '/admin/messages') {
       adminComponent = <AdminMessagesPage />;
-    } else if (path === '/admin/support') {
+    } else if (cleanPath === '/admin/support') {
       adminComponent = <AdminSupportPage />;
-    } else if (path === '/admin/settings') {
+    } else if (cleanPath === '/admin/settings') {
       adminComponent = <AdminSettingsPage />;
-    } else if (path === '/admin/legal') {
+    } else if (cleanPath === '/admin/legal') {
       adminComponent = <AdminLegalPage />;
     }
 
@@ -125,23 +126,23 @@ const AppContent: React.FC = () => {
   // 3. Public Routes
   let publicComponent = <NotFoundPage />;
 
-  if (path === '/') {
+  if (cleanPath === '/') {
     publicComponent = <HomePage />;
-  } else if (path === '/apps') {
+  } else if (cleanPath === '/apps') {
     publicComponent = <OurAppsPage />;
-  } else if (path.startsWith('/apps/') && path.endsWith('/privacy')) {
+  } else if (cleanPath.startsWith('/apps/') && cleanPath.endsWith('/privacy')) {
     publicComponent = <AppPrivacyPage />;
-  } else if (path.startsWith('/apps/') && path.split('/').length === 3) {
+  } else if (cleanPath.startsWith('/apps/') && cleanPath.split('/').length === 3) {
     publicComponent = <AppDetailPage />;
-  } else if (path === '/about') {
+  } else if (cleanPath === '/about') {
     publicComponent = <AboutPage />;
-  } else if (path === '/support') {
+  } else if (cleanPath === '/support') {
     publicComponent = <SupportPage />;
-  } else if (path === '/contact') {
+  } else if (cleanPath === '/contact') {
     publicComponent = <ContactPage />;
-  } else if (path === '/privacy-policy') {
+  } else if (cleanPath === '/privacy-policy') {
     publicComponent = <PrivacyPolicyPage />;
-  } else if (path === '/terms') {
+  } else if (cleanPath === '/terms') {
     publicComponent = <TermsPage />;
   }
 

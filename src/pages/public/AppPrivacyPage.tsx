@@ -1,24 +1,142 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { AppItem, SiteSettings } from '../../types.ts';
 import { api } from '../../services/api.ts';
 import { useRouter, Link } from '../../context/RouterContext.tsx';
 import { Shield, ArrowLeft, ExternalLink, Mail, CheckCircle2 } from 'lucide-react';
 
+function scopeCssRules(cssText: string, scopeClass: string): string {
+  // Remove CSS comments and dangerous @import / javascript: expressions
+  let cleaned = cssText
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/@import[^;]*;/gi, '')
+    .replace(/expression\s*\(/gi, '');
+
+  const prefixSelectorList = (selectorList: string): string => {
+    return selectorList
+      .split(',')
+      .map((sel) => {
+        const s = sel.trim();
+        if (!s) return '';
+        if (s === ':root' || s === 'html' || s === 'body') {
+          return `.${scopeClass}`;
+        }
+        if (s === '*') {
+          return `.${scopeClass}, .${scopeClass} *`;
+        }
+        if (s.startsWith('body ')) {
+          return `.${scopeClass} ${s.slice(5)}`;
+        }
+        if (s.startsWith('html ')) {
+          return `.${scopeClass} ${s.slice(5)}`;
+        }
+        return `.${scopeClass} ${s}`;
+      })
+      .filter(Boolean)
+      .join(', ');
+  };
+
+  // Handle @media blocks and standard rules cleanly
+  let result = '';
+  let i = 0;
+  const len = cleaned.length;
+
+  while (i < len) {
+    const openIdx = cleaned.indexOf('{', i);
+    if (openIdx === -1) break;
+
+    const prelude = cleaned.slice(i, openIdx).trim();
+
+    if (prelude.startsWith('@media') || prelude.startsWith('@supports')) {
+      // Find matching closing brace for nested block
+      let depth = 1;
+      let j = openIdx + 1;
+      while (j < len && depth > 0) {
+        if (cleaned[j] === '{') depth++;
+        else if (cleaned[j] === '}') depth--;
+        j++;
+      }
+      const innerCss = cleaned.slice(openIdx + 1, j - 1);
+      result += `${prelude} {\n${scopeCssRules(innerCss, scopeClass)}\n}\n`;
+      i = j;
+    } else if (prelude.startsWith('@')) {
+      let depth = 1;
+      let j = openIdx + 1;
+      while (j < len && depth > 0) {
+        if (cleaned[j] === '{') depth++;
+        else if (cleaned[j] === '}') depth--;
+        j++;
+      }
+      result += `${cleaned.slice(i, j)}\n`;
+      i = j;
+    } else {
+      const closeIdx = cleaned.indexOf('}', openIdx + 1);
+      if (closeIdx === -1) break;
+      const body = cleaned.slice(openIdx + 1, closeIdx);
+      const scopedSelector = prefixSelectorList(prelude);
+      if (scopedSelector) {
+        result += `${scopedSelector} {${body}}\n`;
+      }
+      i = closeIdx + 1;
+    }
+  }
+
+  return result;
+}
+
+function parseSanitizedHtmlDocument(rawHtml: string): { scopedCss: string; bodyHtml: string } {
+  if (typeof window === 'undefined' || typeof DOMParser === 'undefined') {
+    return { scopedCss: '', bodyHtml: '' };
+  }
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(rawHtml, 'text/html');
+
+  // Extract and scope <style> tags
+  const styleNodes = Array.from(doc.querySelectorAll('style'));
+  const combinedCss = styleNodes.map((s) => s.textContent || '').join('\n');
+  const scopedCss = scopeCssRules(combinedCss, 'khb-privacy-embed');
+
+  // Remove unsafe tags from body
+  const dangerousSelectors = 'script, iframe, object, embed, link, meta, style, base, form';
+  doc.body.querySelectorAll(dangerousSelectors).forEach((el) => el.remove());
+
+  // Strip inline event handlers & javascript: URLs
+  doc.body.querySelectorAll('*').forEach((el) => {
+    for (const attr of Array.from(el.attributes)) {
+      const name = attr.name.toLowerCase();
+      const val = attr.value.trim().toLowerCase();
+      if (name.startsWith('on')) {
+        el.removeAttribute(attr.name);
+      } else if ((name === 'href' || name === 'src') && val.startsWith('javascript:')) {
+        el.removeAttribute(attr.name);
+      }
+    }
+  });
+
+  return {
+    scopedCss,
+    bodyHtml: doc.body.innerHTML,
+  };
+}
+
 export const AppPrivacyPage: React.FC = () => {
   const { path } = useRouter();
   // Extract slug from /apps/:slug/privacy
-  const parts = path.split('/');
+  const cleanPath = path.replace(/\/+$/, '');
+  const parts = cleanPath.split('/');
   const slug = parts[2];
 
   const [app, setApp] = useState<AppItem | null>(null);
   const [settings, setSettings] = useState<SiteSettings | null>(null);
   const [loading, setLoading] = useState(true);
-  const [iframeHeight, setIframeHeight] = useState<number>(1150);
-  const iframeRef = useRef<HTMLIFrameElement | null>(null);
 
   useEffect(() => {
     async function loadData() {
-      if (!slug) return;
+      if (!slug) {
+        setLoading(false);
+        return;
+      }
+      setLoading(true);
       try {
         const [appRes, settingsRes] = await Promise.all([
           api.getAppBySlug(slug),
@@ -35,27 +153,12 @@ export const AppPrivacyPage: React.FC = () => {
     loadData();
   }, [slug]);
 
-  const updateIframeHeight = () => {
-    try {
-      const doc = iframeRef.current?.contentDocument;
-      if (doc && doc.documentElement) {
-        const measured = Math.max(
-          doc.documentElement.scrollHeight || 0,
-          doc.body?.scrollHeight || 0
-        );
-        if (measured > 200) {
-          setIframeHeight(measured + 16);
-        }
-      }
-    } catch {
-      // Fallback height already set
+  const parsedCustomHtml = useMemo(() => {
+    if (!app?.privacyPolicyHtml || !app.privacyPolicyHtml.trim()) {
+      return null;
     }
-  };
-
-  useEffect(() => {
-    window.addEventListener('resize', updateIframeHeight);
-    return () => window.removeEventListener('resize', updateIframeHeight);
-  }, []);
+    return parseSanitizedHtmlDocument(app.privacyPolicyHtml);
+  }, [app?.privacyPolicyHtml]);
 
   if (loading) {
     return (
@@ -76,22 +179,26 @@ export const AppPrivacyPage: React.FC = () => {
     );
   }
 
-  if (app.privacyPolicyHtml && app.privacyPolicyHtml.trim().length > 0) {
-    const safeHtml = app.privacyPolicyHtml.replace(
-      /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
-      ''
-    );
-
+  if (parsedCustomHtml && parsedCustomHtml.bodyHtml) {
     return (
       <div className="min-h-screen py-8 md:py-12 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-          <Link
-            to={`/apps/${app.slug}`}
-            className="inline-flex items-center gap-2 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Back to {app.name} Details</span>
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link
+              to={`/apps/${app.slug}`}
+              className="inline-flex items-center gap-2 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Back to {app.name} Details</span>
+            </Link>
+            <span className="text-slate-300 dark:text-slate-700">|</span>
+            <Link
+              to="/privacy-policy"
+              className="text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:underline"
+            >
+              All Privacy Policies
+            </Link>
+          </div>
 
           <a
             href={`/apps/${app.slug}/privacy.html`}
@@ -104,14 +211,13 @@ export const AppPrivacyPage: React.FC = () => {
           </a>
         </div>
 
-        <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm bg-[#0b1120]">
-          <iframe
-            ref={iframeRef}
-            title={`${app.name} Privacy Policy`}
-            srcDoc={safeHtml}
-            sandbox="allow-same-origin"
-            onLoad={updateIframeHeight}
-            style={{ width: '100%', height: `${iframeHeight}px`, border: 'none', display: 'block' }}
+        <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-lg">
+          {parsedCustomHtml.scopedCss && (
+            <style>{parsedCustomHtml.scopedCss}</style>
+          )}
+          <div
+            className="khb-privacy-embed"
+            dangerouslySetInnerHTML={{ __html: parsedCustomHtml.bodyHtml }}
           />
         </div>
       </div>

@@ -367,13 +367,26 @@ export const AppDetailPage: React.FC = () => {
               {app.privacyPolicy ||
                 'This application does not transmit or monetize your personal files, notes, or credentials.'}
             </p>
-            <Link
-              to={`/apps/${app.slug}/privacy`}
-              className="text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:underline flex items-center gap-1"
-            >
-              <span>Read Full App Privacy Policy</span>
-              <ExternalLink className="w-3 h-3" />
-            </Link>
+            <div className="flex flex-col gap-2">
+              <Link
+                to={`/apps/${app.slug}/privacy`}
+                className="text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:underline flex items-center gap-1"
+              >
+                <span>Read Full App Privacy Policy</span>
+                <ExternalLink className="w-3 h-3" />
+              </Link>
+              {app.privacyPolicyHtml && (
+                <a
+                  href={`/apps/${app.slug}/privacy.html`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[11px] font-semibold text-emerald-600/90 dark:text-emerald-300/80 hover:underline flex items-center gap-1"
+                >
+                  <span>Standalone HTML Policy URL</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              )}
+            </div>
           </div>
 
           {/* Need Support Card */}

@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from '../../context/RouterContext.tsx';
-import { SiteSettings, PageContent } from '../../types.ts';
+import { AppItem, SiteSettings, PageContent } from '../../types.ts';
 import { api } from '../../services/api.ts';
 import { Shield, Lock, FileText, ExternalLink, Mail, ArrowUpRight } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const [settings, setSettings] = useState<SiteSettings | null>(null);
   const [content, setContent] = useState<PageContent | null>(null);
+  const [apps, setApps] = useState<AppItem[]>([]);
 
   useEffect(() => {
-    Promise.all([api.getSettings(), api.getPageContent()])
-      .then(([settingsRes, contentRes]) => {
+    Promise.all([api.getSettings(), api.getPageContent(), api.getPublicApps()])
+      .then(([settingsRes, contentRes, appsRes]) => {
         if (settingsRes.success && settingsRes.settings) setSettings(settingsRes.settings);
         if (contentRes.success && contentRes.content) setContent(contentRes.content);
+        if (appsRes.success && appsRes.apps) setApps(appsRes.apps);
       })
       .catch(() => {});
   }, []);
@@ -185,6 +187,18 @@ export const Footer: React.FC = () => {
                     <span>Privacy Policy</span>
                   </Link>
                 </li>
+                {apps.map((app) => (
+                  <li key={app.id}>
+                    <Link
+                      to={`/apps/${app.slug}/privacy`}
+                      id={`footer-app-privacy-${app.slug}`}
+                      className="text-slate-400 hover:text-white transition-colors flex items-center gap-1.5"
+                    >
+                      <Shield className="w-3.5 h-3.5 text-cyan-400" />
+                      <span>{app.name} Privacy Policy</span>
+                    </Link>
+                  </li>
+                ))}
                 <li>
                   <Link to="/terms" id="footer-terms-conditions" className="text-slate-400 hover:text-white transition-colors flex items-center gap-1.5">
                     <FileText className="w-3.5 h-3.5 text-indigo-400" />
