@@ -750,14 +750,14 @@ export const AdminThemePage: React.FC = () => {
                     className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white shadow-xs"
                     style={{ backgroundColor: effectiveSettings.colors.primary }}
                   >
-                    EM
+                    AC
                   </div>
                   <div className="flex-1 min-w-0">
                     <h4
                       className="font-bold text-xs truncate"
                       style={{ color: effectiveSettings.colors.textMain }}
                     >
-                      Expense Manager & Budget
+                      Auto Clicker Utility
                     </h4>
                     <span
                       className="text-[10px]"

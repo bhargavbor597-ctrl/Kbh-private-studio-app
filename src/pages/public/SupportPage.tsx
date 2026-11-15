@@ -105,7 +105,7 @@ export const SupportPage: React.FC = () => {
   const defaultFaqs: DisplayFaq[] = [
     {
       q: 'How do I backup or restore data in your utility apps?',
-      a: 'Most of our applications (such as Expense Manager and Color Notes) offer local backup files or CSV export options under the in-app Settings. Since we prioritize privacy and do not store your data on external clouds, your backups reside securely on your device storage or personal Google Drive.',
+      a: 'Our utility applications store your automation profiles, presets, and preferences securely on your local device storage. You can manage or clear saved presets directly inside the app Settings at any time.',
     },
     {
       q: 'Are your apps and casual games free to use?',

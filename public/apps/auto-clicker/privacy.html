@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Auto Clicker Software Testing Utility</title>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --surface: #131c31;
+      --surface-alt: #1a2642;
+      --border: #263554;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --success: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      padding: 32px 16px 64px;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.14);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      margin-bottom: 10px;
+      letter-spacing: 0.03em;
+    }
+    h1 {
+      font-size: 1.9rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .highlight-box {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      color: #d1fae5;
+      font-size: 0.94rem;
+    }
+    section {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    h2 {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    p, li {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+    }
+    ul {
+      padding-left: 20px;
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    a {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+    footer {
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 24px 18px; }
+      h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <span class="badge">SOFTWARE TESTING &amp; AUTOMATION UTILITY</span>
+      <h1>Privacy Policy for Auto Clicker</h1>
+      <p class="meta">Package ID: <strong>com.kbh.precisionautoclicker</strong> &bull; Effective Date: January 1, 2026</p>
+    </header>
+
+    <div class="highlight-box">
+      <strong>Summary:</strong> Auto Clicker operates 100% locally on your device. We do not collect, track, sell, or transmit personal data, screen content, keystrokes, or usage telemetry to external servers.
+    </div>
+
+    <section>
+      <h2>1. Overview &amp; Scope</h2>
+      <p>
+        This Privacy Policy explains how <strong>Auto Clicker</strong> (<code>com.kbh.precisionautoclicker</code>), a personal-purpose software testing, UI verification, and accessibility automation utility, handles device permissions and local configuration storage.
+      </p>
+    </section>
+
+    <section>
+      <h2>2. Information We Do Not Collect</h2>
+      <p>Auto Clicker is engineered with a strict zero-collection architecture. The application does not collect, access, store externally, or share:</p>
+      <ul>
+        <li>Personally identifiable information (name, email address, phone number, or account credentials).</li>
+        <li>Device identifiers, advertising IDs, IP addresses, or precise geolocation data.</li>
+        <li>Keystrokes, passwords, notifications, financial details, or personal messages.</li>
+        <li>Screenshots, screen recordings, or analytics/crash telemetry sent to third-party servers.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>3. Local On-Device Storage</h2>
+      <p>
+        All user-created automation profiles, target screen coordinates, timing intervals, hold durations, and interface preferences (such as dark/light theme and marker appearance) are saved exclusively on your local device using Android Room SQLite, SharedPreferences, or browser <code>localStorage</code>. You maintain full control and may delete saved presets inside the app or remove all stored data by clearing app storage or uninstalling the application.
+      </p>
+    </section>
+
+    <section>
+      <h2>4. Android AccessibilityService API Disclosure</h2>
+      <p>
+        To execute automated touch testing and repetitive click workflows on Android, Auto Clicker requests permission to use the Android <code>AccessibilityService</code> API. This permission is strictly limited to:
+      </p>
+      <ul>
+        <li>Dispatching touch gestures (taps and timed holds via <code>dispatchGesture()</code>) at the exact screen coordinates configured by the user.</li>
+        <li>Inspecting active window transition status strictly for real-click test diagnostics.</li>
+      </ul>
+      <p style="margin-top: 8px;">
+        Auto Clicker <strong>never</strong> uses the AccessibilityService to collect personal data, monitor text input, bypass security prompts, or transmit screen contents off your device.
+      </p>
+    </section>
+
+    <section>
+      <h2>5. Display Over Other Apps (Overlay Permission)</h2>
+      <p>
+        The <code>SYSTEM_ALERT_WINDOW</code> permission is used solely to render floating control widgets (Start, Pause, Stop, Add Target) and draggable target markers over other applications during testing or automation sessions. You can toggle off the overlay at any time inside the app or revoke the permission in Android System Settings.
+      </p>
+    </section>
+
+    <section>
+      <h2>6. Third-Party Services &amp; Advertising</h2>
+      <p>
+        Auto Clicker does not embed third-party advertising networks, behavioral tracking SDKs, or external data brokers. No user data is shared with third parties.
+      </p>
+    </section>
+
+    <section>
+      <h2>7. Children's Privacy</h2>
+      <p>
+        This software testing utility is not directed toward children under the age of 13 and does not knowingly collect personal information from anyone, including children.
+      </p>
+    </section>
+
+    <section>
+      <h2>8. Policy Updates &amp; Contact Information</h2>
+      <p>
+        We may update this Privacy Policy periodically to remain transparent and compliant with platform requirements. If you have questions or privacy inquiries regarding Auto Clicker, please contact:
+      </p>
+      <p style="margin-top: 8px;">
+        <strong>Developer Contact:</strong> <a href="mailto:bhargavbor597@gmail.com">bhargavbor597@gmail.com</a>
+      </p>
+    </section>
+
+    <footer>
+      &copy; 2026 Auto Clicker (com.kbh.precisionautoclicker) &bull; Software Testing &amp; Accessibility Utility
+    </footer>
+  </main>
+</body>
+</html>

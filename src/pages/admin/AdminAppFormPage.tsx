@@ -40,6 +40,7 @@ export const AdminAppFormPage: React.FC = () => {
   const [shortDescription, setShortDescription] = useState('');
   const [fullDescription, setFullDescription] = useState('');
   const [privacyPolicy, setPrivacyPolicy] = useState('');
+  const [privacyPolicyHtml, setPrivacyPolicyHtml] = useState('');
 
   // Dynamic lists
   const [screenshots, setScreenshots] = useState<string[]>([]);
@@ -85,6 +86,7 @@ export const AdminAppFormPage: React.FC = () => {
             setShortDescription(a.shortDescription || '');
             setFullDescription(a.fullDescription || '');
             setPrivacyPolicy(a.privacyPolicy || '');
+            setPrivacyPolicyHtml(a.privacyPolicyHtml || '');
             setScreenshots(a.screenshots || []);
             setFeatures(a.features || []);
             setPermissions(a.permissions || []);
@@ -169,6 +171,7 @@ export const AdminAppFormPage: React.FC = () => {
       shortDescription: shortDescription.trim(),
       fullDescription: fullDescription.trim(),
       privacyPolicy: privacyPolicy.trim(),
+      privacyPolicyHtml: privacyPolicyHtml.trim(),
       screenshots,
       features,
       permissions,
@@ -267,21 +270,21 @@ export const AdminAppFormPage: React.FC = () => {
                 required
                 value={name}
                 onChange={(e) => handleNameChange(e.target.value)}
-                placeholder="e.g. Color Notes Pro"
+                placeholder="e.g. Auto Clicker"
                 className="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                URL Slug * (e.g. /apps/color-notes-pro)
+                URL Slug * (e.g. /apps/auto-clicker)
               </label>
               <input
                 type="text"
                 required
                 value={slug}
                 onChange={(e) => setSlug(e.target.value)}
-                placeholder="color-notes-pro"
+                placeholder="auto-clicker"
                 className="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
             </div>
@@ -658,17 +661,35 @@ export const AdminAppFormPage: React.FC = () => {
           </div>
 
           {/* Privacy Policy */}
-          <div>
-            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-              App Privacy Policy Statement
-            </label>
-            <textarea
-              rows={3}
-              value={privacyPolicy}
-              onChange={(e) => setPrivacyPolicy(e.target.value)}
-              placeholder="Explain how user data is kept on-device and privacy principles..."
-              className="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-            />
+          <div className="space-y-4">
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                App Privacy Policy Summary
+              </label>
+              <textarea
+                rows={3}
+                value={privacyPolicy}
+                onChange={(e) => setPrivacyPolicy(e.target.value)}
+                placeholder="Explain how user data is kept on-device and privacy principles..."
+                className="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                Custom HTML Privacy Policy Page (Optional)
+              </label>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-1.5">
+                If provided, this complete HTML document will be rendered on the app's privacy policy page (/apps/{slug || 'slug'}/privacy) and standalone endpoint (/apps/{slug || 'slug'}/privacy.html).
+              </p>
+              <textarea
+                rows={8}
+                value={privacyPolicyHtml}
+                onChange={(e) => setPrivacyPolicyHtml(e.target.value)}
+                placeholder="<!DOCTYPE html>..."
+                className="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              />
+            </div>
           </div>
         </div>
 

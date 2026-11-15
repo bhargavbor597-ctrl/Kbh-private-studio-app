@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AppItem, SiteSettings } from '../../types.ts';
 import { api } from '../../services/api.ts';
 import { useRouter, Link } from '../../context/RouterContext.tsx';
@@ -13,6 +13,8 @@ export const AppPrivacyPage: React.FC = () => {
   const [app, setApp] = useState<AppItem | null>(null);
   const [settings, setSettings] = useState<SiteSettings | null>(null);
   const [loading, setLoading] = useState(true);
+  const [iframeHeight, setIframeHeight] = useState<number>(1150);
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
 
   useEffect(() => {
     async function loadData() {
@@ -33,6 +35,28 @@ export const AppPrivacyPage: React.FC = () => {
     loadData();
   }, [slug]);
 
+  const updateIframeHeight = () => {
+    try {
+      const doc = iframeRef.current?.contentDocument;
+      if (doc && doc.documentElement) {
+        const measured = Math.max(
+          doc.documentElement.scrollHeight || 0,
+          doc.body?.scrollHeight || 0
+        );
+        if (measured > 200) {
+          setIframeHeight(measured + 16);
+        }
+      }
+    } catch {
+      // Fallback height already set
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', updateIframeHeight);
+    return () => window.removeEventListener('resize', updateIframeHeight);
+  }, []);
+
   if (loading) {
     return (
       <div className="min-h-screen py-20 max-w-4xl mx-auto px-4">
@@ -48,6 +72,48 @@ export const AppPrivacyPage: React.FC = () => {
         <Link to="/apps" className="text-indigo-600 hover:underline">
           Return to Our Apps
         </Link>
+      </div>
+    );
+  }
+
+  if (app.privacyPolicyHtml && app.privacyPolicyHtml.trim().length > 0) {
+    const safeHtml = app.privacyPolicyHtml.replace(
+      /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+      ''
+    );
+
+    return (
+      <div className="min-h-screen py-8 md:py-12 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <Link
+            to={`/apps/${app.slug}`}
+            className="inline-flex items-center gap-2 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Back to {app.name} Details</span>
+          </Link>
+
+          <a
+            href={`/apps/${app.slug}/privacy.html`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-colors"
+          >
+            <span>Open Standalone HTML</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+        </div>
+
+        <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm bg-[#0b1120]">
+          <iframe
+            ref={iframeRef}
+            title={`${app.name} Privacy Policy`}
+            srcDoc={safeHtml}
+            sandbox="allow-same-origin"
+            onLoad={updateIframeHeight}
+            style={{ width: '100%', height: `${iframeHeight}px`, border: 'none', display: 'block' }}
+          />
+        </div>
       </div>
     );
   }

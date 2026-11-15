@@ -162,6 +162,12 @@ export const AppDetailPage: React.FC = () => {
             </p>
 
             <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-slate-500 dark:text-slate-400">
+              {app.packageName && (
+                <div>
+                  <span className="font-semibold text-slate-700 dark:text-slate-300">Package ID: </span>
+                  <span className="font-mono">{app.packageName}</span>
+                </div>
+              )}
               {app.version && (
                 <div>
                   <span className="font-semibold text-slate-700 dark:text-slate-300">Version: </span>

@@ -34,6 +34,21 @@ export async function createServer() {
     return res.send('google-site-verification: google8ead62883de26aa2.html');
   });
 
+  // Standalone HTML privacy policy for any app with custom privacyPolicyHtml
+  app.get('/apps/:slug/privacy.html', async (req: Request, res: Response, next) => {
+    try {
+      const appItem = await storage.getAppBySlug(req.params.slug);
+      if (appItem && appItem.privacyPolicyHtml) {
+        const sanitized = appItem.privacyPolicyHtml.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        return res.send(sanitized);
+      }
+      return next();
+    } catch {
+      return next();
+    }
+  });
+
   // REST API router
   app.use('/api', apiRouter);
 

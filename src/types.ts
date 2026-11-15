@@ -23,6 +23,7 @@ export interface AppItem {
   permissions: string[];
   playStoreUrl?: string;
   privacyPolicy?: string;
+  privacyPolicyHtml?: string;
   supportEmail?: string;
   websiteUrl?: string;
   faq: AppFAQ[];

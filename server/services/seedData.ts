@@ -148,25 +148,11 @@ Sitemap: https://khbenterprise.com/sitemap.xml
       uploadedAt: '2026-08-01T12:00:00.000Z',
     },
     {
-      id: 'med-app-expense',
-      name: 'Expense Manager Icon',
-      url: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=160&auto=format&fit=crop&q=80',
+      id: 'med-app-auto-clicker',
+      name: 'Auto Clicker Icon',
+      url: '/assets/auto-clicker-icon.svg',
       category: 'app-icon',
-      uploadedAt: '2026-08-01T12:00:00.000Z',
-    },
-    {
-      id: 'med-app-notes',
-      name: 'Color Notes Icon',
-      url: 'https://images.unsplash.com/photo-1517842645767-c639042777db?w=160&auto=format&fit=crop&q=80',
-      category: 'app-icon',
-      uploadedAt: '2026-08-01T12:00:00.000Z',
-    },
-    {
-      id: 'med-app-chess',
-      name: 'Chess Master Icon',
-      url: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=160&auto=format&fit=crop&q=80',
-      category: 'app-icon',
-      uploadedAt: '2026-08-01T12:00:00.000Z',
+      uploadedAt: '2026-11-15T00:00:00.000Z',
     },
   ],
 };
@@ -431,7 +417,7 @@ For legal questions regarding these terms, reach out to:
     faqs: [
       {
         q: 'How do I backup or restore data in your utility apps?',
-        a: 'Most of our applications (such as Expense Manager and Color Notes) offer local backup files or CSV export options under the in-app Settings. Since we prioritize privacy and do not store your data on external clouds, your backups reside securely on your device storage or personal Google Drive.',
+        a: 'Our utility applications store your automation profiles, presets, and preferences securely on your local device storage. You can manage or clear saved presets directly inside the app Settings at any time.',
       },
       {
         q: 'Are your apps and casual games free to use?',
@@ -475,342 +461,258 @@ For legal questions regarding these terms, reach out to:
   },
 };
 
+export const AUTO_CLICKER_PRIVACY_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Auto Clicker Software Testing Utility</title>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --surface: #131c31;
+      --surface-alt: #1a2642;
+      --border: #263554;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --success: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      padding: 32px 16px 64px;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.14);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      margin-bottom: 10px;
+      letter-spacing: 0.03em;
+    }
+    h1 {
+      font-size: 1.9rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .highlight-box {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      color: #d1fae5;
+      font-size: 0.94rem;
+    }
+    section {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    h2 {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    p, li {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+    }
+    ul {
+      padding-left: 20px;
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    a {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+    footer {
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 24px 18px; }
+      h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <span class="badge">SOFTWARE TESTING &amp; AUTOMATION UTILITY</span>
+      <h1>Privacy Policy for Auto Clicker</h1>
+      <p class="meta">Package ID: <strong>com.kbh.precisionautoclicker</strong> &bull; Effective Date: January 1, 2026</p>
+    </header>
+
+    <div class="highlight-box">
+      <strong>Summary:</strong> Auto Clicker operates 100% locally on your device. We do not collect, track, sell, or transmit personal data, screen content, keystrokes, or usage telemetry to external servers.
+    </div>
+
+    <section>
+      <h2>1. Overview &amp; Scope</h2>
+      <p>
+        This Privacy Policy explains how <strong>Auto Clicker</strong> (<code>com.kbh.precisionautoclicker</code>), a personal-purpose software testing, UI verification, and accessibility automation utility, handles device permissions and local configuration storage.
+      </p>
+    </section>
+
+    <section>
+      <h2>2. Information We Do Not Collect</h2>
+      <p>Auto Clicker is engineered with a strict zero-collection architecture. The application does not collect, access, store externally, or share:</p>
+      <ul>
+        <li>Personally identifiable information (name, email address, phone number, or account credentials).</li>
+        <li>Device identifiers, advertising IDs, IP addresses, or precise geolocation data.</li>
+        <li>Keystrokes, passwords, notifications, financial details, or personal messages.</li>
+        <li>Screenshots, screen recordings, or analytics/crash telemetry sent to third-party servers.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>3. Local On-Device Storage</h2>
+      <p>
+        All user-created automation profiles, target screen coordinates, timing intervals, hold durations, and interface preferences (such as dark/light theme and marker appearance) are saved exclusively on your local device using Android Room SQLite, SharedPreferences, or browser <code>localStorage</code>. You maintain full control and may delete saved presets inside the app or remove all stored data by clearing app storage or uninstalling the application.
+      </p>
+    </section>
+
+    <section>
+      <h2>4. Android AccessibilityService API Disclosure</h2>
+      <p>
+        To execute automated touch testing and repetitive click workflows on Android, Auto Clicker requests permission to use the Android <code>AccessibilityService</code> API. This permission is strictly limited to:
+      </p>
+      <ul>
+        <li>Dispatching touch gestures (taps and timed holds via <code>dispatchGesture()</code>) at the exact screen coordinates configured by the user.</li>
+        <li>Inspecting active window transition status strictly for real-click test diagnostics.</li>
+      </ul>
+      <p style="margin-top: 8px;">
+        Auto Clicker <strong>never</strong> uses the AccessibilityService to collect personal data, monitor text input, bypass security prompts, or transmit screen contents off your device.
+      </p>
+    </section>
+
+    <section>
+      <h2>5. Display Over Other Apps (Overlay Permission)</h2>
+      <p>
+        The <code>SYSTEM_ALERT_WINDOW</code> permission is used solely to render floating control widgets (Start, Pause, Stop, Add Target) and draggable target markers over other applications during testing or automation sessions. You can toggle off the overlay at any time inside the app or revoke the permission in Android System Settings.
+      </p>
+    </section>
+
+    <section>
+      <h2>6. Third-Party Services &amp; Advertising</h2>
+      <p>
+        Auto Clicker does not embed third-party advertising networks, behavioral tracking SDKs, or external data brokers. No user data is shared with third parties.
+      </p>
+    </section>
+
+    <section>
+      <h2>7. Children's Privacy</h2>
+      <p>
+        This software testing utility is not directed toward children under the age of 13 and does not knowingly collect personal information from anyone, including children.
+      </p>
+    </section>
+
+    <section>
+      <h2>8. Policy Updates &amp; Contact Information</h2>
+      <p>
+        We may update this Privacy Policy periodically to remain transparent and compliant with platform requirements. If you have questions or privacy inquiries regarding Auto Clicker, please contact:
+      </p>
+      <p style="margin-top: 8px;">
+        <strong>Developer Contact:</strong> <a href="mailto:bhargavbor597@gmail.com">bhargavbor597@gmail.com</a>
+      </p>
+    </section>
+
+    <footer>
+      &copy; 2026 Auto Clicker (com.kbh.precisionautoclicker) &bull; Software Testing &amp; Accessibility Utility
+    </footer>
+  </main>
+</body>
+</html>`;
+
 export const sampleApps: AppItem[] = [
   {
-    id: 'app-expense-manager',
-    name: 'Expense Manager',
-    slug: 'expense-manager',
-    shortDescription: 'Smart daily budget, income tracker, and visual expense manager with offline privacy.',
-    fullDescription: 'Expense Manager is an intuitive personal finance and daily expense tracker designed to help you regain complete clarity over your finances. Categorize income and expenses effortlessly, set monthly spending limits, and review your spending habits with clean visual charts. Works 100% offline with zero bank account linking required.',
-    icon: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=160&auto=format&fit=crop&q=80',
-    screenshots: [
-      'https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=600&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=600&auto=format&fit=crop&q=80',
-    ],
-    category: 'Productivity',
-    appType: 'Productivity App',
+    id: 'app-auto-clicker',
+    name: 'Auto Clicker',
+    slug: 'auto-clicker',
+    packageName: 'com.kbh.precisionautoclicker',
+    shortDescription: 'Personal-purpose software testing, UI verification, and accessibility automation utility with 100% local privacy.',
+    fullDescription: 'Auto Clicker (com.kbh.precisionautoclicker) is a software testing, UI verification, and accessibility automation utility engineered with a strict zero-collection architecture. Execute automated touch testing and repetitive click workflows using the Android AccessibilityService API, control sessions with floating widgets (Start, Pause, Stop, Add Target) and draggable target markers, and save automation profiles, coordinates, timing intervals, and hold durations 100% locally on your device.',
+    icon: '/assets/auto-clicker-icon.svg',
+    screenshots: [],
+    category: 'Utilities',
+    appType: 'Software Testing & Accessibility Utility',
     platform: 'Android / Google Play',
     status: 'Published',
-    version: '1.4.2',
+    version: '1.0.0',
     features: [
-      'Quick 1-tap expense and income entry',
-      'Custom categories with color tags and icons',
-      'Monthly spending budgets with threshold notifications',
-      'Detailed category breakdown and monthly comparison charts',
-      'Complete offline data storage with optional CSV export',
-      'Biometric PIN / Fingerprint lock for financial privacy',
+      'Precision automated taps and timed holds via Android AccessibilityService dispatchGesture()',
+      'Floating control widgets (Start, Pause, Stop, Add Target) & draggable target markers',
+      'Local storage for automation profiles, target screen coordinates, intervals & hold durations',
+      'Customizable dark/light interface theme and marker appearance preferences',
+      'Strict zero-collection architecture — zero ads, trackers, or external telemetry',
+      'Real-click test diagnostics using active window transition inspection',
     ],
     permissions: [
-      'Storage / Media (for backing up and exporting CSV financial reports)',
-      'Biometrics (optional for fingerprint app lock)',
-      'Notifications (optional daily evening expense logging reminder)',
+      'Android AccessibilityService API — Strictly limited to dispatching touch gestures (taps and timed holds via dispatchGesture()) at user-configured coordinates and inspecting active window transition status for real-click test diagnostics.',
+      'Display Over Other Apps (SYSTEM_ALERT_WINDOW) — Used solely to render floating control widgets (Start, Pause, Stop, Add Target) and draggable target markers over other applications.',
     ],
-    playStoreUrl: 'https://play.google.com/store/apps/details?id=com.khb.expensemanager',
-    privacyPolicy: 'Expense Manager operates fully on-device. Your financial transactions, categories, and balances are never uploaded to any remote server.',
-    supportEmail: 'support@khbenterprise.com',
-    websiteUrl: 'https://khbenterprise.com/apps/expense-manager',
+    playStoreUrl: '',
+    privacyPolicy: 'Auto Clicker operates 100% locally on your device. We do not collect, track, sell, or transmit personal data, screen content, keystrokes, or usage telemetry to external servers.',
+    privacyPolicyHtml: AUTO_CLICKER_PRIVACY_HTML,
+    supportEmail: 'bhargavbor597@gmail.com',
+    websiteUrl: 'https://khbenterprise.com/apps/auto-clicker',
     faq: [
       {
-        question: 'Does Expense Manager link to my bank account?',
-        answer: 'No. Expense Manager operates offline without asking for bank logins or credentials, ensuring 100% privacy.',
+        question: 'Does Auto Clicker collect or transmit personal data?',
+        answer: 'No. Auto Clicker operates 100% locally on your device with a strict zero-collection architecture. No personal data, screen content, keystrokes, or telemetry are ever sent to external servers.',
       },
       {
-        question: 'Can I export my records for tax filing or Excel?',
-        answer: 'Yes, you can export your entire transaction history to a CSV or PDF report at any time from the Settings screen.',
+        question: 'Why does Auto Clicker use the Android AccessibilityService API?',
+        answer: 'The AccessibilityService API is used strictly to dispatch touch gestures (taps and timed holds via dispatchGesture()) at your configured screen coordinates and inspect active window transition status for real-click test diagnostics.',
+      },
+      {
+        question: 'Why is Display Over Other Apps (SYSTEM_ALERT_WINDOW) required?',
+        answer: 'It is used solely to display floating control widgets (Start, Pause, Stop, Add Target) and draggable target markers over other applications during testing or automation sessions.',
       },
     ],
     featured: true,
     published: true,
     displayOrder: 1,
-    createdAt: '2026-06-10T10:00:00.000Z',
-    updatedAt: '2026-08-20T14:30:00.000Z',
-  },
-  {
-    id: 'app-color-notes',
-    name: 'Color Notes & Quick Lists',
-    slug: 'color-notes',
-    shortDescription: 'Clean, colorful notepad for checklists, memos, reminders, and daily journaling.',
-    fullDescription: 'Capture your thoughts, daily agendas, and shopping lists instantly with Color Notes. Featuring color-coded organization, rich markdown text editing, instant search, pinned favorites, and home screen widgets, it keeps your daily routine organized and effortless.',
-    icon: 'https://images.unsplash.com/photo-1517842645767-c639042777db?w=160&auto=format&fit=crop&q=80',
-    screenshots: [
-      'https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?w=600&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&auto=format&fit=crop&q=80',
-    ],
-    category: 'Productivity',
-    appType: 'Productivity App',
-    platform: 'Android / Google Play',
-    status: 'Published',
-    version: '2.1.0',
-    features: [
-      'Color-coded notebook tabs and labels',
-      'Checklist mode with interactive strike-through items',
-      'Voice-to-text dictation support',
-      'Pin important notes to top of the grid',
-      'Automatic dark mode and custom font scaling',
-      'Trash bin recovery with 30-day restore guarantee',
-    ],
-    permissions: [
-      'Notifications (for scheduled note reminders)',
-      'Microphone (optional voice-to-text dictation)',
-    ],
-    playStoreUrl: 'https://play.google.com/store/apps/details?id=com.khb.colornotes',
-    privacyPolicy: 'All notes, checklists, and memos are stored securely in local device storage and remain strictly private.',
-    supportEmail: 'support@khbenterprise.com',
-    websiteUrl: 'https://khbenterprise.com/apps/color-notes',
-    faq: [
-      {
-        question: 'Are my notes backed up to the cloud?',
-        answer: 'You can create an encrypted local backup file or save it to your personal Google Drive account at any time.',
-      },
-    ],
-    featured: true,
-    published: true,
-    displayOrder: 2,
-    createdAt: '2026-05-15T09:00:00.000Z',
-    updatedAt: '2026-08-18T11:15:00.000Z',
-  },
-  {
-    id: 'app-qr-utility',
-    name: 'QR Utility - Scanner & Creator',
-    slug: 'qr-utility',
-    shortDescription: 'Lightning-fast QR & barcode scanner with custom code generator and history log.',
-    fullDescription: 'QR Utility provides ultra-fast code scanning for all 1D and 2D formats (QR, UPC, EAN, Code 39, Data Matrix). Generate custom QR codes for Wi-Fi credentials, contacts, website links, or text with personalized colors and logos. Includes an offline history log and batch scanning mode.',
-    icon: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=160&auto=format&fit=crop&q=80',
-    screenshots: [
-      'https://images.unsplash.com/photo-1595079672139-545c604b9015?w=600&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&auto=format&fit=crop&q=80',
-    ],
-    category: 'Utilities',
-    appType: 'Utility App',
-    platform: 'Android / Google Play',
-    status: 'Published',
-    version: '3.0.1',
-    features: [
-      'Instant camera detection with flashlight toggle for dark settings',
-      'Scan directly from gallery screenshots or images',
-      'Wi-Fi QR code 1-tap connection',
-      'Create QR codes for URLs, SMS, Contacts, WhatsApp, and Crypto',
-      'Continuous batch scan mode for inventory and retail',
-      'URL safety checks before opening external links in browser',
-    ],
-    permissions: [
-      'Camera (required to scan QR and barcodes)',
-      'Storage (optional to read QR codes from device photo gallery)',
-    ],
-    playStoreUrl: 'https://play.google.com/store/apps/details?id=com.khb.qrscanner',
-    privacyPolicy: 'Camera feed is processed in real-time on your hardware. No images or camera streams are transmitted or saved.',
-    supportEmail: 'support@khbenterprise.com',
-    websiteUrl: 'https://khbenterprise.com/apps/qr-utility',
-    faq: [
-      {
-        question: 'Does it support scanning barcodes on products?',
-        answer: 'Yes! It supports UPC-A, EAN-13, EAN-8, Code 128, and many more barcode formats for price checks and product lookup.',
-      },
-    ],
-    featured: true,
-    published: true,
-    displayOrder: 3,
-    createdAt: '2026-04-01T08:30:00.000Z',
-    updatedAt: '2026-08-25T16:00:00.000Z',
-  },
-  {
-    id: 'app-chess-master',
-    name: 'Chess Master 3D - Offline Strategy',
-    slug: 'chess-master',
-    shortDescription: 'Classic chess game with intelligent AI engine, puzzle tactics, and two-player mode.',
-    fullDescription: 'Whether you are learning chess fundamentals or mastering advanced opening lines, Chess Master 3D brings a tactile wooden board experience to your smartphone. Challenge 10 adaptive AI difficulty levels, solve over 500 tactical chess puzzles, or pass-and-play with a friend offline.',
-    icon: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=160&auto=format&fit=crop&q=80',
-    screenshots: [
-      'https://images.unsplash.com/photo-1586165368502-1bad197a6461?w=600&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1580541832626-2a7131ee809f?w=600&auto=format&fit=crop&q=80',
-    ],
-    category: 'Games',
-    appType: 'Game',
-    platform: 'Android / Google Play',
-    status: 'Published',
-    version: '1.2.0',
-    features: [
-      'Realistic 3D and high-contrast 2D board perspectives',
-      '10 difficulty levels powered by an optimized Stockfish-derived engine',
-      'Hint and Undo move assistance for beginner learning',
-      'Daily endgame and checkmate puzzle challenges',
-      'PGN export to analyze matches in your favorite chess software',
-      'No internet connection required — play anytime on airplanes or commutes',
-    ],
-    permissions: [
-      'Vibration (for tactile move feedback)',
-    ],
-    playStoreUrl: 'https://play.google.com/store/apps/details?id=com.khb.chessmaster',
-    privacyPolicy: 'Offline game with zero personal telemetry. Game progress and scores are saved only on your device.',
-    supportEmail: 'support@khbenterprise.com',
-    websiteUrl: 'https://khbenterprise.com/apps/chess-master',
-    faq: [
-      {
-        question: 'Can I play offline without Wi-Fi?',
-        answer: 'Yes! The entire AI engine and puzzle database run 100% offline without any internet connection.',
-      },
-    ],
-    featured: true,
-    published: true,
-    displayOrder: 4,
-    createdAt: '2026-03-20T12:00:00.000Z',
-    updatedAt: '2026-07-30T10:20:00.000Z',
-  },
-  {
-    id: 'app-smart-alarm',
-    name: 'Smart Alarm Clock & Sleep Sounds',
-    slug: 'smart-alarm-clock',
-    shortDescription: 'Gentle wake-up alarm with soothing nature sounds, math puzzles, and bedtime timer.',
-    fullDescription: 'Smart Alarm Clock helps you wake up feeling refreshed rather than startled. Choose from progressive volume wake-up tones, ambient white noise and rain sounds for sleep, and interactive morning brain puzzles to ensure you never accidentally sleep through your schedule.',
-    icon: 'https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?w=160&auto=format&fit=crop&q=80',
-    screenshots: [
-      'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=600&auto=format&fit=crop&q=80',
-    ],
-    category: 'Utilities',
-    appType: 'Utility App',
-    platform: 'Android / Google Play',
-    status: 'Published',
-    version: '1.0.8',
-    features: [
-      'Gradual sunrise volume increase over 1 to 10 minutes',
-      'Mission dismiss tasks: solve math, shake phone, or scan QR',
-      'Soothing bedtime ambient sound machine (rain, waves, campfire, forest)',
-      'Multiple recurring alarms with custom labels and vibration patterns',
-      'Bedtime reminder with wind-down screen dimmer',
-    ],
-    permissions: [
-      'Alarm & Reminders (USE_EXACT_ALARM for precision wake-up timing)',
-      'Vibrate (tactile alarm feedback)',
-      'Notifications (active alarm status in notification shade)',
-    ],
-    playStoreUrl: 'https://play.google.com/store/apps/details?id=com.khb.smartalarm',
-    privacyPolicy: 'Alarm times, sound preferences, and sleep logs remain on your local phone storage.',
-    supportEmail: 'support@khbenterprise.com',
-    websiteUrl: 'https://khbenterprise.com/apps/smart-alarm-clock',
-    faq: [
-      {
-        question: 'Will the alarm ring if my phone is on silent mode?',
-        answer: 'Yes, alarms use the dedicated Android Alarm stream to ensure sound rings even when silent or Do Not Disturb is active.',
-      },
-    ],
-    featured: false,
-    published: true,
-    displayOrder: 5,
-    createdAt: '2026-06-01T07:00:00.000Z',
-    updatedAt: '2026-08-10T15:45:00.000Z',
-  },
-  {
-    id: 'app-brick-storm',
-    name: 'Brick Storm - Retro Ball Breaker',
-    slug: 'brick-storm',
-    shortDescription: 'Addictive brick breaker arcade with physics-based bounces and power-ups.',
-    fullDescription: 'Aim, shoot, and watch chains of balls clear geometric brick obstacles in Brick Storm. Featuring hundreds of satisfying stages, lasers, split-balls, bomb explosions, and vibrant retro synthwave visuals.',
-    icon: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=160&auto=format&fit=crop&q=80',
-    screenshots: [
-      'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&auto=format&fit=crop&q=80',
-    ],
-    category: 'Games',
-    appType: 'Game',
-    platform: 'Android / Google Play',
-    status: 'Published',
-    version: '1.1.2',
-    features: [
-      'Realistic ball physics and collision dynamics',
-      'Over 300 unique handcrafted challenge levels',
-      'Unlockable ball skins and glowing visual effects',
-      'Power-up boosters including missile strikes and horizontal lasers',
-      'Playable with one finger in vertical portrait mode',
-    ],
-    permissions: [
-      'Vibration (haptic feedback on brick collisions)',
-    ],
-    playStoreUrl: 'https://play.google.com/store/apps/details?id=com.khb.brickstorm',
-    privacyPolicy: 'Offline casual game. No personal data collected.',
-    supportEmail: 'support@khbenterprise.com',
-    websiteUrl: 'https://khbenterprise.com/apps/brick-storm',
-    faq: [
-      {
-        question: 'Is internet connection required to play?',
-        answer: 'No, all 300+ levels are unlocked and playable offline.',
-      },
-    ],
-    featured: false,
-    published: true,
-    displayOrder: 6,
-    createdAt: '2026-07-12T14:20:00.000Z',
-    updatedAt: '2026-08-28T09:10:00.000Z',
-  },
-  {
-    id: 'app-habit-forge',
-    name: 'Habit Forge - Daily Routine Tracker',
-    slug: 'habit-forge',
-    shortDescription: 'Build enduring positive habits, track daily streaks, and visualize personal growth.',
-    fullDescription: 'Habit Forge transforms goal setting into a rewarding daily habit loop. Create morning and evening routines, track milestone streaks, and build momentum with flexible schedules and motivating streak heatmaps.',
-    icon: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=160&auto=format&fit=crop&q=80',
-    screenshots: [
-      'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600&auto=format&fit=crop&q=80',
-    ],
-    category: 'Productivity',
-    appType: 'Productivity App',
-    platform: 'Android / Google Play',
-    status: 'Coming Soon',
-    version: '1.0.0-beta',
-    features: [
-      'Flexible habit scheduling (daily, specific weekdays, or times per week)',
-      'GitHub-style annual streak heatmap visualization',
-      'Custom reminder notifications tailored to each routine',
-      'Detailed success rate statistics and completion percentages',
-    ],
-    permissions: [
-      'Notifications (habit reminders)',
-    ],
-    playStoreUrl: '',
-    privacyPolicy: 'Habit records and streak milestones are stored locally on your device.',
-    supportEmail: 'support@khbenterprise.com',
-    websiteUrl: 'https://khbenterprise.com/apps/habit-forge',
-    faq: [],
-    featured: false,
-    published: false,
-    displayOrder: 7,
-    createdAt: '2026-08-01T11:00:00.000Z',
-    updatedAt: '2026-08-29T10:00:00.000Z',
-  },
-  {
-    id: 'app-unit-converter',
-    name: 'Unit & Currency Converter Pro',
-    slug: 'unit-currency-converter',
-    shortDescription: 'Offline unit converter covering 30+ measurement categories and global currencies.',
-    fullDescription: 'An indispensable tool for students, engineers, travelers, and home chefs. Converts length, weight, area, volume, temperature, pressure, speed, data storage, and global currency exchange rates with instant real-time typing results.',
-    icon: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=160&auto=format&fit=crop&q=80',
-    screenshots: [
-      'https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=600&auto=format&fit=crop&q=80',
-    ],
-    category: 'Tools',
-    appType: 'Tool',
-    platform: 'Android / Google Play',
-    status: 'Coming Soon',
-    version: '1.0.0',
-    features: [
-      'Instant conversion as you type across 30+ physical units',
-      'Offline calculation engine with cached currency rates',
-      'Built-in mini scientific calculator',
-      'Clean numeric keypad designed for quick one-handed use',
-    ],
-    permissions: [
-      'Network (optional to update daily international currency exchange rates)',
-    ],
-    playStoreUrl: '',
-    privacyPolicy: 'No personal data collected or stored.',
-    supportEmail: 'support@khbenterprise.com',
-    websiteUrl: 'https://khbenterprise.com/apps/unit-currency-converter',
-    faq: [],
-    featured: false,
-    published: false,
-    displayOrder: 8,
-    createdAt: '2026-08-15T15:00:00.000Z',
-    updatedAt: '2026-08-30T12:00:00.000Z',
+    createdAt: '2026-01-01T00:00:00.000Z',
+    updatedAt: '2026-11-15T00:00:00.000Z',
   },
 ];
 
