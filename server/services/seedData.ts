@@ -8,7 +8,7 @@ export const initialSettings: SiteSettings = {
   description: 'We create useful mobile applications and engaging games designed to provide simple, practical and enjoyable digital experiences.',
   supportEmail: 'support@khbenterprise.com',
   contactEmail: 'contact@khbenterprise.com',
-  websiteUrl: 'https://khbenterprise.com',
+  websiteUrl: 'https://kbh-private-studio-app.vercel.app',
   playStoreDeveloperUrl: 'https://play.google.com/store/apps/developer?id=KHB+Private+Limited',
   socialLinks: {
     twitter: 'https://twitter.com/khbenterprise',
@@ -93,15 +93,15 @@ export const initialSettings: SiteSettings = {
     metaKeywords: 'KHB Private Limited, KAMBARIYA-HB, mobile apps, Android apps, Google Play, utility tools, casual games, developer',
     ogImageUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop&q=80',
     twitterCardType: 'summary_large_image',
-    canonicalBaseUrl: 'https://khbenterprise.com',
-    googleSearchConsoleVerification: '',
+    canonicalBaseUrl: 'https://kbh-private-studio-app.vercel.app',
+    googleSearchConsoleVerification: 'b8imPF_4NNCALLvmwffUqdhf8X50oLRGOiUUkkFXzpE',
     googlePlayDeveloperVerification: 'KHB Private Limited',
     robotsTxtContent: `User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://khbenterprise.com/sitemap.xml
+Sitemap: https://kbh-private-studio-app.vercel.app/sitemap.xml
 `,
     enableStructuredData: true,
   },
@@ -693,7 +693,7 @@ export const sampleApps: AppItem[] = [
     privacyPolicy: 'Auto Clicker operates 100% locally on your device. We do not collect, track, sell, or transmit personal data, screen content, keystrokes, or usage telemetry to external servers.',
     privacyPolicyHtml: AUTO_CLICKER_PRIVACY_HTML,
     supportEmail: 'bhargavbor597@gmail.com',
-    websiteUrl: 'https://khbenterprise.com/apps/auto-clicker',
+    websiteUrl: 'https://kbh-private-studio-app.vercel.app/apps/auto-clicker',
     faq: [
       {
         question: 'Does Auto Clicker collect or transmit personal data?',

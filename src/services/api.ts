@@ -1,4 +1,5 @@
 import { AppItem, ContactMessage, SupportRequest, SiteSettings, PageContent, AdminUser, AdminStats } from '../types.ts';
+import { FALLBACK_APPS, FALLBACK_SETTINGS, FALLBACK_PAGE_CONTENT } from '../data/fallbackData.ts';
 
 const API_BASE = '/api';
 
@@ -22,6 +23,11 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
     headers,
   });
 
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    throw new Error(`Unexpected response type (${response.status})`);
+  }
+
   const data = await response.json();
   if (!response.ok) {
     throw new Error(data.message || `Request failed with status ${response.status}`);
@@ -38,20 +44,60 @@ export const api = {
     if (params?.search) query.set('search', params.search);
     if (params?.featured) query.set('featured', 'true');
     const qs = query.toString() ? `?${query.toString()}` : '';
-    return request<{ success: boolean; apps: AppItem[]; count: number }>(`/apps${qs}`);
+    try {
+      return await request<{ success: boolean; apps: AppItem[]; count: number }>(`/apps${qs}`);
+    } catch {
+      let filtered = [...FALLBACK_APPS];
+      if (params?.status && params.status !== 'All') {
+        filtered = filtered.filter((a) => a.status === params.status);
+      }
+      if (params?.category && params.category !== 'All') {
+        filtered = filtered.filter((a) => a.category.toLowerCase() === params.category!.toLowerCase());
+      }
+      if (params?.featured) {
+        filtered = filtered.filter((a) => a.featured);
+      }
+      if (params?.search) {
+        const q = params.search.toLowerCase().trim();
+        filtered = filtered.filter(
+          (a) =>
+            a.name.toLowerCase().includes(q) ||
+            a.shortDescription.toLowerCase().includes(q) ||
+            a.category.toLowerCase().includes(q) ||
+            a.features.some((f) => f.toLowerCase().includes(q))
+        );
+      }
+      return { success: true, apps: filtered, count: filtered.length };
+    }
   },
 
   async getAppBySlug(slug: string): Promise<{ success: boolean; app: AppItem }> {
-    return request<{ success: boolean; app: AppItem }>(`/apps/${encodeURIComponent(slug)}`);
+    try {
+      return await request<{ success: boolean; app: AppItem }>(`/apps/${encodeURIComponent(slug)}`);
+    } catch (err) {
+      const fallback = FALLBACK_APPS.find((a) => a.slug === slug);
+      if (fallback) {
+        return { success: true, app: fallback };
+      }
+      throw err;
+    }
   },
 
   // Public Settings & Content
   async getSettings(): Promise<{ success: boolean; settings: SiteSettings }> {
-    return request<{ success: boolean; settings: SiteSettings }>('/organization');
+    try {
+      return await request<{ success: boolean; settings: SiteSettings }>('/organization');
+    } catch {
+      return { success: true, settings: FALLBACK_SETTINGS };
+    }
   },
 
   async getPageContent(): Promise<{ success: boolean; content: PageContent }> {
-    return request<{ success: boolean; content: PageContent }>('/content');
+    try {
+      return await request<{ success: boolean; content: PageContent }>('/content');
+    } catch {
+      return { success: true, content: FALLBACK_PAGE_CONTENT };
+    }
   },
 
   // Public Inquiries

@@ -128,6 +128,7 @@ export const AppPrivacyPage: React.FC = () => {
 
   const [app, setApp] = useState<AppItem | null>(null);
   const [settings, setSettings] = useState<SiteSettings | null>(null);
+  const [staticHtmlFallback, setStaticHtmlFallback] = useState<string>('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -144,6 +145,20 @@ export const AppPrivacyPage: React.FC = () => {
         ]);
         if (appRes.success) setApp(appRes.app);
         if (settingsRes.success) setSettings(settingsRes.settings);
+
+        if (!appRes.app?.privacyPolicyHtml) {
+          try {
+            const htmlRes = await fetch(`/apps/${encodeURIComponent(slug)}/privacy.html`);
+            if (htmlRes.ok && (htmlRes.headers.get('content-type') || '').includes('text/html')) {
+              const raw = await htmlRes.text();
+              if (raw && !raw.includes('id="root"')) {
+                setStaticHtmlFallback(raw);
+              }
+            }
+          } catch {
+            // ignore static fallback fetch error
+          }
+        }
       } catch (err) {
         console.error('Failed to load app privacy:', err);
       } finally {
@@ -154,11 +169,12 @@ export const AppPrivacyPage: React.FC = () => {
   }, [slug]);
 
   const parsedCustomHtml = useMemo(() => {
-    if (!app?.privacyPolicyHtml || !app.privacyPolicyHtml.trim()) {
+    const rawHtml = app?.privacyPolicyHtml?.trim() || staticHtmlFallback.trim();
+    if (!rawHtml) {
       return null;
     }
-    return parseSanitizedHtmlDocument(app.privacyPolicyHtml);
-  }, [app?.privacyPolicyHtml]);
+    return parseSanitizedHtmlDocument(rawHtml);
+  }, [app?.privacyPolicyHtml, staticHtmlFallback]);
 
   if (loading) {
     return (

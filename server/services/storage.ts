@@ -17,6 +17,8 @@ interface DatabaseSchema {
 class StorageEngine {
   private dataDir: string;
   private dbFilePath: string;
+  private tmpDbFilePath = '/tmp/khb-db.json';
+  private isVercel = Boolean(process.env.VERCEL);
   private db: DatabaseSchema | null = null;
   private isInitialized = false;
 
@@ -29,7 +31,7 @@ class StorageEngine {
     if (this.isInitialized) return;
 
     try {
-      if (!fs.existsSync(this.dataDir)) {
+      if (!this.isVercel && !fs.existsSync(this.dataDir)) {
         fs.mkdirSync(this.dataDir, { recursive: true });
       }
 
@@ -37,8 +39,13 @@ class StorageEngine {
       const defaultAdminPassword = process.env.ADMIN_PASSWORD || 'bhargav1616m';
       const initialAdmin = await createInitialAdminUser(defaultAdminEmail, defaultAdminPassword);
 
-      if (fs.existsSync(this.dbFilePath)) {
-        const fileContent = fs.readFileSync(this.dbFilePath, 'utf-8');
+      const readPath =
+        this.isVercel && fs.existsSync(this.tmpDbFilePath)
+          ? this.tmpDbFilePath
+          : this.dbFilePath;
+
+      if (fs.existsSync(readPath)) {
+        const fileContent = fs.readFileSync(readPath, 'utf-8');
         this.db = JSON.parse(fileContent);
 
         // Ensure all required top-level collections exist
@@ -213,6 +220,10 @@ class StorageEngine {
   private async persist(): Promise<void> {
     if (!this.db) return;
     try {
+      if (this.isVercel) {
+        fs.writeFileSync(this.tmpDbFilePath, JSON.stringify(this.db, null, 2), 'utf-8');
+        return;
+      }
       if (!fs.existsSync(this.dataDir)) {
         fs.mkdirSync(this.dataDir, { recursive: true });
       }
@@ -360,6 +371,7 @@ class StorageEngine {
 
   // --- Utility to keep public/app-ads.txt in sync ---
   public syncAppAdsFile(content: string): void {
+    if (this.isVercel) return;
     try {
       const publicDir = path.resolve(process.cwd(), 'public');
       if (!fs.existsSync(publicDir)) {
